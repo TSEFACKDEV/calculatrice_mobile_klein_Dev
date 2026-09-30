@@ -2671,3 +2671,4 @@
 /home/klein/Documents/Cours GLO5/Calculatrice/obj/Debug/net10.0-android/android/marshal_methods.x86_64.o
 /home/klein/Documents/Cours GLO5/Calculatrice/obj/Debug/net10.0-android/android/jni_remap.x86_64.o
 /home/klein/Documents/Cours GLO5/Calculatrice/obj/Debug/net10.0-android/app_shared_libraries/x86_64/libxamarin-app.so
+/home/klein/Documents/Cours GLO5/Calculatrice/obj/Debug/net10.0-android/Calculatrice.sourcelink.json
