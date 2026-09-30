@@ -21,7 +21,7 @@ un historique horodaté et une interface sombre pensée pour le mobile.
 
 ## Fonctionnalités
 
-### 🔢 Mode Standard
+### Mode Standard
 
 Arithmétique complète avec gestion correcte des priorités, des parenthèses auto-fermantes et de l'affichage en direct de l'aperçu du résultat.
 
@@ -35,9 +35,9 @@ Arithmétique complète avec gestion correcte des priorités, des parenthèses a
 | `√` `x²` `x³` `1/x` | Racine, puissances, inverse |
 | `x!` | Factorielle |
 | `MS MR M+ M− MC` | Registre mémoire (5 emplacements) |
-| `⌫` `AC` | Correction / tout effacer |
+| `⌫` (retour arrière) `AC` (tout effacer) | Correction / tout effacer |
 
-### 📐 Mode Scientifique
+### Mode Scientifique
 
 Trigonométrie, logarithmes, constantes et recalled du dernier résultat.
 
@@ -45,10 +45,10 @@ Trigonométrie, logarithmes, constantes et recalled du dernier résultat.
 - `ln` `log` (base 10) `log₂` (base 2), `√`
 - Constantes : `π`, `e`
 - `Ans` — rappel du dernier résultat calculé
-- Bascule d'angle en un tap : **DEG → RAD → GRAD** (`MainPage.xaml.cs:626`)
+- Bascule d'angle en un tap : **DEG puis RAD puis GRAD** (`MainPage.xaml.cs:626`)
 - Exposants `xʸ`
 
-### 🧮 Mode Programmeur
+### Mode Programmeur
 
 Calcul en bases multiples et opérations bit à bit.
 
@@ -57,13 +57,13 @@ Calcul en bases multiples et opérations bit à bit.
 - Opérations logiques : `AND` `OR` `XOR` `NOT`
 - `MOD`, décalages `<<` et `>>`
 
-### 🔄 Convertisseur d'unités
+### Convertisseur d'unités
 
 Onze catégories, conversion dans les deux sens avec table deéquivalence générée automatiquement.
 
 `Longueur` · `Masse` · `Température` · `Aire` · `Volume` · `Vitesse` · `Temps` · `Données` · `Angle` · `Énergie` · `Puissance`
 
-### 🗂️ Commun à tous les modes
+### Commun à tous les modes
 
 - **Historique** des 60 derniers calculs (expression, résultat, horodage), réinjectable en un tap
 - **Aperçu live** du résultat pendant la saisie
@@ -222,9 +222,9 @@ xcode-select -p && xcodebuild -version
 
 | OS hôte | Android | iOS / simulateur | Mac Catalyst | Windows |
 |---|---|---|---|---|
-| **Linux** | ✅ | ❌ | ❌ | ❌ |
-| **Windows** | ✅ | ❌ | ❌ | ✅ |
-| **macOS** | ✅ | ✅ | ✅ | ❌ |
+| **Linux** | Oui | Non | Non | Non |
+| **Windows** | Oui | Non | Non | Oui |
+| **macOS** | Oui | Oui | Oui | Non |
 
 ---
 
@@ -261,7 +261,7 @@ les scénarios fonctionnels suivants, à exécuter après chaque modification.
 | S5 | `50 %` | `0.5` |
 | S6 | `9 √` | `3` |
 | S7 | `5 x!` | `120` |
-| S8 | `⌫` après `123` | `12` |
+| S8 | Touche `⌫` (retour arrière) après `123` | `12` |
 | S9 | `1 ÷ 0 =` | Message d'erreur, pas de crash |
 
 #### Scientifique
@@ -288,9 +288,9 @@ les scénarios fonctionnels suivants, à exécuter après chaque modification.
 
 | # | Action | Résultat attendu |
 |---|---|---|
-| U1 | `1 km` → `m` | `1000 m` |
-| U2 | `100 °C` → `°F` | `212 °F` |
-| U3 | `1 kg` → `lb` | `2.20462262 lb` |
+| U1 | `1 km` vers `m` | `1000 m` |
+| U2 | `100 °C` vers `°F` | `212 °F` |
+| U3 | `1 kg` vers `lb` | `2.20462262 lb` |
 | U4 | Bouton d'échange des unités | Les valeurs source/cible sont inversées |
 | U5 | Saisie d'un texte non numérique | Message « Valeur invalide » |
 

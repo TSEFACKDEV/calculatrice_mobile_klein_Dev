@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="Calculatrice" mvid="b4fa86f2c24d459f994a8ab43f3f8f2c">
+<api type="debug" assembly-name="Calculatrice" mvid="c951d15301dd4f3cbacc09a91dd34770">
   <java-to-managed>
     <entry java-name="crc64eaa00992d76c7eba/MainActivity" managed-name="Calculatrice.MainActivity, Calculatrice" managed-type-token-id="33554442" />
     <entry java-name="crc64eaa00992d76c7eba/MainApplication" managed-name="Calculatrice.MainApplication, Calculatrice" managed-type-token-id="33554443" />

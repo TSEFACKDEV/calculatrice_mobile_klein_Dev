@@ -122,7 +122,7 @@
                             </Label>
                         </Border>
 
-                        <Button Text="&#x1F552;" Style="{StaticResource Chip}" FontSize="15"
+                        <Button Text="Hist" Style="{StaticResource Chip}"
                                 Clicked="OnHistoryClicked" />
                     </HorizontalStackLayout>
 
@@ -264,7 +264,7 @@
                         <Grid x:Name="StandardPad" HeightRequest="290" RowSpacing="8" ColumnSpacing="8"
                               RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*">
                             <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
-                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="RET" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="2" Text="%" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="3" Text="&#x00F7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
 
@@ -294,7 +294,7 @@
                               RowSpacing="8" ColumnSpacing="8"
                               RowDefinitions="*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
                             <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
-                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="RET" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="2" Text="(" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="3" Text=")" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="4" Text="&#x00F7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
@@ -344,7 +344,7 @@
                               RowSpacing="8" ColumnSpacing="8"
                               RowDefinitions="*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
                             <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
-                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="RET" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="2" Text="(" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="3" Text=")" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
                             <Button Grid.Row="0" Grid.Column="4" Text="NOT" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />

@@ -502,7 +502,7 @@ public partial class MainPage : ContentPage
             case "AC":
                 ClearAll();
                 break;
-            case "\u231B":
+            case "RET":
                 Backspace();
                 break;
             case "=":
