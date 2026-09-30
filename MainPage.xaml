@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Calculatrice.MainPage"
+             Title="Calculatrice"
+             BackgroundColor="#0A0E1A">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="Page0">#141E3C</Color>
+            <Color x:Key="Page1">#0A0E1A</Color>
+            <Color x:Key="Page2">#1B1033</Color>
+
+            <Color x:Key="Card">#141A2C</Color>
+            <Color x:Key="CardAlt">#1B2237</Color>
+            <Color x:Key="Stroke">#2A3350</Color>
+            <Color x:Key="Txt">#EAEEF9</Color>
+            <Color x:Key="TxtMuted">#8A93AD</Color>
+            <Color x:Key="Accent">#6C8CFF</Color>
+            <Color x:Key="Mint">#25D8A0</Color>
+            <Color x:Key="Danger">#FF6B81</Color>
+
+            <Style x:Key="Key" TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource Txt}" />
+                <Setter Property="FontSize" Value="19" />
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="BackgroundColor" Value="{StaticResource CardAlt}" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MinimumHeightRequest" Value="0" />
+                <Setter Property="MinimumWidthRequest" Value="0" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="VerticalOptions" Value="Fill" />
+            </Style>
+
+            <Style x:Key="KeyDigit" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="{StaticResource CardAlt}" />
+            </Style>
+
+            <Style x:Key="KeyFn" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="#222A45" />
+                <Setter Property="TextColor" Value="{StaticResource TxtMuted}" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+
+            <Style x:Key="KeyOp" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+                <Setter Property="TextColor" Value="#FFFFFF" />
+                <Setter Property="FontSize" Value="21" />
+            </Style>
+
+            <Style x:Key="KeyDanger" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="#3A1F2C" />
+                <Setter Property="TextColor" Value="{StaticResource Danger}" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="KeyEquals" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="{StaticResource Mint}" />
+                <Setter Property="TextColor" Value="#06251C" />
+                <Setter Property="FontSize" Value="24" />
+            </Style>
+
+            <Style x:Key="Chip" TargetType="Button" BasedOn="{StaticResource Key}">
+                <Setter Property="BackgroundColor" Value="#1B2237" />
+                <Setter Property="TextColor" Value="{StaticResource TxtMuted}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="10,6" />
+            </Style>
+
+            <Style x:Key="TabLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TxtMuted}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid x:Name="RootLayout">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Page0}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource Page1}" Offset="0.55" />
+                    <GradientStop Color="{StaticResource Page2}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <Grid Padding="16,12,16,10" RowDefinitions="Auto,*">
+
+                <!--  ============ HEADER ============  -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
+
+                    <Border Grid.Row="0" Grid.Column="0"
+                            BackgroundColor="#1B2237"
+                            Stroke="#39456B"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 14"
+                            Padding="12,7"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start">
+                        <Label Text="&lt;/Klein_Dev&gt;"
+                               TextColor="{StaticResource Accent}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="16" />
+                    </Border>
+
+                    <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
+                        <Border BackgroundColor="#1B2237" Stroke="#39456B" StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12" Padding="10,6">
+                            <Label x:Name="AngleLabel" Text="DEG" TextColor="{StaticResource Mint}"
+                                   FontFamily="OpenSansSemibold" FontSize="12">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAngleTapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Border>
+
+                        <Button Text="&#x1F552;" Style="{StaticResource Chip}" FontSize="15"
+                                Clicked="OnHistoryClicked" />
+                    </HorizontalStackLayout>
+
+                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="Standard &#x2022; Scientifique &#x2022; Programmeur &#x2022; Convertisseur"
+                           TextColor="{StaticResource TxtMuted}" FontSize="11" />
+                </Grid>
+
+                <!--  ============ CONTENT ============  -->
+                <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never" Margin="0,12,0,0">
+                    <VerticalStackLayout Spacing="12">
+
+                        <!--  ========== DISPLAY ==========  -->
+                        <Border BackgroundColor="{StaticResource Card}"
+                                Stroke="{StaticResource Stroke}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 24"
+                                Padding="16,12">
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="4">
+
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                    <Border BackgroundColor="#1E2740" StrokeShape="RoundRectangle 10" Padding="8,3"
+                                            HorizontalOptions="Start">
+                                        <Label x:Name="ModeChip" Text="Standard" TextColor="{StaticResource Accent}"
+                                               FontFamily="OpenSansSemibold" FontSize="11" />
+                                    </Border>
+
+                                    <HorizontalStackLayout Grid.Column="1" Spacing="6">
+                                        <Button Text="MS" Style="{StaticResource Chip}" FontSize="11"
+                                                Padding="9,4" Clicked="OnMemStore" />
+                                        <Button Text="MR" Style="{StaticResource Chip}" FontSize="11"
+                                                Padding="9,4" Clicked="OnMemRecall" />
+                                        <Button Text="M+" Style="{StaticResource Chip}" FontSize="11"
+                                                Padding="9,4" Clicked="OnMemAdd" />
+                                        <Button Text="M-" Style="{StaticResource Chip}" FontSize="11"
+                                                Padding="9,4" Clicked="OnMemSub" />
+                                        <Button Text="MC" Style="{StaticResource Chip}" FontSize="11"
+                                                Padding="9,4" Clicked="OnMemClear" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                                <Label Grid.Row="1" x:Name="ExpressionLabel"
+                                       Text="0" TextColor="{StaticResource TxtMuted}" FontSize="14"
+                                       HorizontalTextAlignment="End" LineBreakMode="TailTruncation" MaxLines="1" />
+
+                                <Label Grid.Row="2" x:Name="ResultLabel"
+                                       Text="0" TextColor="{StaticResource Txt}"
+                                       FontSize="42" FontAttributes="Bold" FontFamily="OpenSansSemibold"
+                                       HorizontalTextAlignment="End" LineBreakMode="TailTruncation" MaxLines="1" />
+
+                                <Grid Grid.Row="3" x:Name="ProgrammerPanel" IsVisible="False" RowSpacing="6">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                                        <Border Grid.Column="0" x:Name="BaseDecBox" BackgroundColor="#1B2237"
+                                                StrokeShape="RoundRectangle 10" Padding="0,6" HeightRequest="32">
+                                            <Label Text="DEC" Style="{StaticResource TabLabel}" FontSize="11">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnBaseTapped" CommandParameter="10" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+                                        <Border Grid.Column="1" x:Name="BaseHexBox" BackgroundColor="#1B2237"
+                                                StrokeShape="RoundRectangle 10" Padding="0,6" HeightRequest="32">
+                                            <Label Text="HEX" Style="{StaticResource TabLabel}" FontSize="11">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnBaseTapped" CommandParameter="16" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+                                        <Border Grid.Column="2" x:Name="BaseOctBox" BackgroundColor="#1B2237"
+                                                StrokeShape="RoundRectangle 10" Padding="0,6" HeightRequest="32">
+                                            <Label Text="OCT" Style="{StaticResource TabLabel}" FontSize="11">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnBaseTapped" CommandParameter="8" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+                                        <Border Grid.Column="3" x:Name="BaseBinBox" BackgroundColor="#1B2237"
+                                                StrokeShape="RoundRectangle 10" Padding="0,6" HeightRequest="32">
+                                            <Label Text="BIN" Style="{StaticResource TabLabel}" FontSize="11">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnBaseTapped" CommandParameter="2" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Border>
+                                    </Grid>
+
+                                    <VerticalStackLayout Grid.Row="1" Spacing="2">
+                                        <Label x:Name="DecLabel" Text="" TextColor="{StaticResource TxtMuted}" FontSize="11" />
+                                        <Label x:Name="HexLabel" Text="" TextColor="{StaticResource Mint}" FontSize="11" />
+                                        <Label x:Name="OctLabel" Text="" TextColor="{StaticResource TxtMuted}" FontSize="11" />
+                                        <Label x:Name="BinLabel" Text="" TextColor="{StaticResource TxtMuted}" FontSize="11" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!--  ========== MODE TABS ==========  -->
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                            <Border Grid.Column="0" x:Name="TabStandard" BackgroundColor="#1B2237"
+                                    StrokeShape="RoundRectangle 14" Padding="0,11">
+                                <Label x:Name="TabStandardText" Text="Standard" Style="{StaticResource TabLabel}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnModeTapped" CommandParameter="0" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                            <Border Grid.Column="1" x:Name="TabScientific" BackgroundColor="#1B2237"
+                                    StrokeShape="RoundRectangle 14" Padding="0,11">
+                                <Label x:Name="TabScientificText" Text="Sci" Style="{StaticResource TabLabel}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnModeTapped" CommandParameter="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                            <Border Grid.Column="2" x:Name="TabProgrammer" BackgroundColor="#1B2237"
+                                    StrokeShape="RoundRectangle 14" Padding="0,11">
+                                <Label x:Name="TabProgrammerText" Text="Prog" Style="{StaticResource TabLabel}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnModeTapped" CommandParameter="2" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                            <Border Grid.Column="3" x:Name="TabConverter" BackgroundColor="#1B2237"
+                                    StrokeShape="RoundRectangle 14" Padding="0,11">
+                                <Label x:Name="TabConverterText" Text="Conv" Style="{StaticResource TabLabel}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnModeTapped" CommandParameter="3" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Border>
+                        </Grid>
+
+                        <!--  ========== STANDARD KEYPAD ==========  -->
+                        <Grid x:Name="StandardPad" HeightRequest="290" RowSpacing="8" ColumnSpacing="8"
+                              RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*">
+                            <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="2" Text="%" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="3" Text="&#x00F7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="1" Grid.Column="0" Text="7" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="1" Text="8" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="2" Text="9" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="3" Text="&#x00D7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="2" Grid.Column="0" Text="4" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="1" Text="5" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="2" Text="6" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="3" Text="&#x2212;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="3" Grid.Column="0" Text="1" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="1" Text="2" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="2" Text="3" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="3" Text="+" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="4" Grid.Column="0" Text="&#x00B1;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="1" Text="0" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="2" Text="," Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="3" Text="=" Style="{StaticResource KeyEquals}" Clicked="OnKeyClicked" />
+                        </Grid>
+
+                        <!--  ========== SCIENTIFIC KEYPAD ==========  -->
+                        <Grid x:Name="ScientificPad" IsVisible="False" HeightRequest="404"
+                              RowSpacing="8" ColumnSpacing="8"
+                              RowDefinitions="*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
+                            <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="2" Text="(" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="3" Text=")" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="4" Text="&#x00F7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="1" Grid.Column="0" Text="7" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="1" Text="8" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="2" Text="9" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="3" Text="%" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="4" Text="&#x00D7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="2" Grid.Column="0" Text="4" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="1" Text="5" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="2" Text="6" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="3" Text="x&#x00B2;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="4" Text="&#x2212;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="3" Grid.Column="0" Text="1" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="1" Text="2" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="2" Text="3" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="3" Text="x&#x02C6;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="4" Text="+" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="4" Grid.Column="0" Text="&#x00B1;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="1" Text="0" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="2" Text="," Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="3" Text="&#x221A;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="4" Grid.RowSpan="4" Text="=" Style="{StaticResource KeyEquals}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="5" Grid.Column="0" Text="sin" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="1" Text="cos" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="2" Text="tan" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="3" Text="ln" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="6" Grid.Column="0" Text="&#x03C0;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="1" Text="e" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="2" Text="x!" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="3" Text="1/x" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="7" Grid.Column="0" Text="Ans" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="7" Grid.Column="1" Text="log" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="7" Grid.Column="2" Text="log&#x2082;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="7" Grid.Column="3" Text="mod" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                        </Grid>
+
+                        <!--  ========== PROGRAMMER KEYPAD ==========  -->
+                        <Grid x:Name="ProgrammerPad" IsVisible="False" HeightRequest="360"
+                              RowSpacing="8" ColumnSpacing="8"
+                              RowDefinitions="*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
+                            <Button Grid.Row="0" Grid.Column="0" Text="AC" Style="{StaticResource KeyDanger}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="&#x231B;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="2" Text="(" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="3" Text=")" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="0" Grid.Column="4" Text="NOT" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="1" Grid.Column="0" Text="7" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="1" Text="8" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="2" Text="9" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="3" Text="AND" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="1" Grid.Column="4" Text="&#x00F7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="2" Grid.Column="0" Text="4" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="1" Text="5" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="2" Text="6" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="3" Text="OR" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="2" Grid.Column="4" Text="&#x00D7;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="3" Grid.Column="0" Text="1" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="1" Text="2" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="2" Text="3" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="3" Text="XOR" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="3" Grid.Column="4" Text="&#x2212;" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="4" Grid.Column="0" Text="A" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="1" Text="B" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="2" Text="C" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="3" Text="D" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="4" Grid.Column="4" Text="+" Style="{StaticResource KeyOp}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="5" Grid.Column="0" Text="E" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="1" Text="F" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="2" Text="0" Style="{StaticResource KeyDigit}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="3" Text="MOD" Style="{StaticResource KeyFn}" FontSize="13" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="5" Grid.Column="4" Grid.RowSpan="2" Text="=" Style="{StaticResource KeyEquals}" Clicked="OnKeyClicked" />
+
+                            <Button Grid.Row="6" Grid.Column="0" Text="&#x00B1;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="1" Text="&lt;&lt;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="2" Text="&gt;&gt;" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                            <Button Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Text="Ans" Style="{StaticResource KeyFn}" Clicked="OnKeyClicked" />
+                        </Grid>
+
+                        <!--  ========== CONVERTER ==========  -->
+                        <Border x:Name="ConverterPanel" IsVisible="False"
+                                BackgroundColor="{StaticResource Card}"
+                                Stroke="{StaticResource Stroke}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 24"
+                                Padding="16,14">
+                            <VerticalStackLayout Spacing="10">
+
+                                <Label Text="CONVERTISSEUR D'UNITES" TextColor="{StaticResource Accent}"
+                                       FontFamily="OpenSansSemibold" FontSize="12" />
+
+                                <Picker x:Name="CategoryPicker" Title="Categorie"
+                                        TextColor="{StaticResource Txt}" TitleColor="{StaticResource TxtMuted}"
+                                        BackgroundColor="Transparent"
+                                        SelectedIndexChanged="OnCategoryChanged" />
+
+                                <Border BackgroundColor="#1B2237" StrokeShape="RoundRectangle 14" Padding="14,0"
+                                        HeightRequest="52">
+                                    <Entry x:Name="ValueEntry" Text="1" TextColor="{StaticResource Txt}"
+                                           PlaceholderColor="{StaticResource TxtMuted}"
+                                           Keyboard="Numeric" FontSize="20"
+                                           TextChanged="OnValueChanged" />
+                                </Border>
+
+                                <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+                                    <Picker Grid.Column="0" x:Name="FromPicker" Title="De"
+                                            TextColor="{StaticResource Txt}" TitleColor="{StaticResource TxtMuted}"
+                                            BackgroundColor="Transparent"
+                                            SelectedIndexChanged="OnUnitChanged" />
+                                    <Button Grid.Column="1" Text="&#x21C5;" Style="{StaticResource KeyOp}"
+                                            FontSize="20" WidthRequest="52" HeightRequest="46"
+                                            Padding="0" Clicked="OnSwapUnits" />
+                                    <Picker Grid.Column="2" x:Name="ToPicker" Title="Vers"
+                                            TextColor="{StaticResource Txt}" TitleColor="{StaticResource TxtMuted}"
+                                            BackgroundColor="Transparent"
+                                            SelectedIndexChanged="OnUnitChanged" />
+                                </Grid>
+
+                                <Border BackgroundColor="#1B2237" Stroke="#39456B" StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18" Padding="16,12">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label x:Name="ConverterResultLabel" Text="0"
+                                               TextColor="{StaticResource Mint}"
+                                               FontSize="26" FontAttributes="Bold" FontFamily="OpenSansSemibold"
+                                               LineBreakMode="WordWrap" />
+                                        <Label x:Name="ConverterResultSubLabel" Text=""
+                                               TextColor="{StaticResource TxtMuted}" FontSize="12" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Label x:Name="ConverterTableLabel" Text=""
+                                       TextColor="{StaticResource TxtMuted}" FontSize="12" LineHeight="18" />
+
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Label Text="&lt;/Klein_Dev&gt;" TextColor="#33406B" FontSize="11"
+                               FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" Margin="0,4,0,0" />
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+
+        <!--  ============ HISTORY OVERLAY ============  -->
+        <Grid x:Name="HistoryOverlay" IsVisible="False" BackgroundColor="#F00A0E1A"
+              RowDefinitions="Auto,Auto,*" Padding="16,20,16,8">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                <Label Text="HISTORIQUE" TextColor="{StaticResource Txt}" FontSize="18"
+                       FontFamily="OpenSansSemibold" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="Effacer" Style="{StaticResource Chip}" FontSize="12"
+                        Clicked="OnClearHistory" />
+            </Grid>
+
+            <Label Grid.Row="1" x:Name="HistoryCountLabel" Text="" TextColor="{StaticResource TxtMuted}"
+                   FontSize="11" Margin="0,0,0,8" />
+
+            <Border Grid.Row="2" BackgroundColor="{StaticResource Card}" Stroke="{StaticResource Stroke}"
+                    StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="6">
+                <CollectionView x:Name="HistoryList" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10,10" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="{Binding Display}" TextColor="{StaticResource Txt}"
+                                       FontSize="14" LineBreakMode="TailTruncation" MaxLines="2"
+                                       VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnHistoryItemTapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Grid.Column="1" Text="{Binding Time}" TextColor="{StaticResource TxtMuted}"
+                                       FontSize="11" VerticalOptions="Center" Margin="10,0,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <Button Grid.Row="2" Text="Fermer" Style="{StaticResource KeyOp}" Clicked="OnCloseHistory"
+                    VerticalOptions="End" HorizontalOptions="Fill" Margin="20,0,20,18" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
